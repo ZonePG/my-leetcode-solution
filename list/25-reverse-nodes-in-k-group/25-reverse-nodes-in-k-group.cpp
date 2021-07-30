@@ -35,6 +35,9 @@ public:
         tail = tail->next;
         if (tail == nullptr)
           return dummyNode->next;
+        // k not reverse
+        /* if (tail->next == nullptr) */
+        /*   break; */
       }
       head = reverseList(head, tail);
       tail = prehead->next;
