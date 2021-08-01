@@ -11,16 +11,16 @@ public:
     bool hasCycle(ListNode *head) {
       if (head == nullptr)
         return false;
-      ListNode *plow = head;
-      ListNode *pfast = head->next;
-      while (plow && pfast) {
-        if (plow == pfast)
-          return true;
-        plow = plow->next;
-        if (pfast->next)
-          pfast = pfast->next->next;
-        else
+      ListNode *low = head;
+      ListNode *fast = head;
+      while (fast != nullptr) {
+        low = low->next;
+        if (fast->next == nullptr) {
           return false;
+        }
+        fast = fast->next->next;
+        if (fast == low)
+          return true;
       }
       return false;
     }
