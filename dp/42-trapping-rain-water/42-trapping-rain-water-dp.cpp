@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <iostream>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -9,27 +9,21 @@ class Solution {
 public:
   int trap(vector<int> &height) {
     int sum = 0;
-    int left = 0, right = height.size() - 1;
-    int left_max = 0;
-    int right_max = 0;
-    while (left < right) {
-      if (height[left] < height[right]) {
-        if (height[left] > left_max) {
-          left_max = height[left];
-        } else {
-          sum += left_max - height[left];
-        }
-        left++;
-      } else {
-        if (height[right] > right_max) {
-          right_max = height[right];
-        } else {
-          sum += right_max - height[right];
-        }
-        right--;
+    vector<int> left_max(height.size(), 0);
+    vector<int> right_max(height.size(), 0);
+    for (int i = 1; i < left_max.size(); i++) {
+      left_max[i] = max(left_max[i - 1], height[i - 1]);
+    }
+    for (int i = height.size() - 2; i >= 0; i--) {
+      right_max[i] = max(right_max[i + 1], height[i + 1]);
+    }
+    for (int i = 1; i < height.size() - 1; i++) {
+      int left = left_max[i];
+      int right = right_max[i];
+      if (left > height[i] && right > height[i]) {
+        sum += min(left, right) - height[i];
       }
     }
-
     return sum;
   }
 };
